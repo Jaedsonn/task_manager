@@ -1,4 +1,5 @@
 import { Task } from "./TaskModel";
+import { Response, Request } from "express";
 
 export interface IUser {
   username: string;
@@ -13,19 +14,15 @@ export class User implements IUser {
   password: string;
   tasks: Task[];
 
-  constructor(username: string, email: string, password: string) {
-    this.username = username;
-    this.email = email;
-    this.password = password;
+  constructor() {
+    this.username = "";
+    this.email = "";
+    this.password = "";
     this.tasks = [];
   }
 
-  async register(req: Request, Request: unknown, res: Response) {
-    const username = this.username;
-    const email = this.email;
-    const password = this.password;
-    const tasks = this.tasks;
-    const user = { username, email, password, tasks };
-    return user
+  async register(req: Request, res: Response): Promise<User | void> {
+    const { username, email, password } = req.body;
+    res.status(200).json({ username, email, password });
   }
 }
